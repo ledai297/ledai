@@ -1,0 +1,48 @@
+﻿@using ListenAndWrite.Models.DataModel
+
+@{
+    ViewBag.Title = "ChooseMode";
+    var Listening = ViewBag.listening as Listening;
+    var account = (Account)(Session["AccountNow"]) as Account;
+}
+
+<h2>ChooseMode</h2>
+<div style="margin-bottom : 100px">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="New-mode">
+                        <div class="title-new-mode">
+                            
+                            <h3 style="margin-top : 0px">Full Mode</h3>
+                        </div>
+                        @Html.ActionLink(Listening.Tittle, "FullMode", "Listening", new { ListeningID = Listening.ListeningID }, null)
+                        <p>m thic viet them cai j vao day thi m viet</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="Full-mode">
+                        <div class="title-full-mode">
+                            <h3 style="margin-top : 0px">New Mode</h3>
+                        </div>
+                        @Html.ActionLink(Listening.Tittle, "NewMode", "Listening", new { id = Listening.ListeningID }, null)
+                        <p>m thic viet them cai j vao day thi m viet</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="Login-and-Signup">
+                <div class="jumbotron">
+                    <ul>
+                        <li><a href="">Login</a></li>
+                        @Html.ActionLink("Logout","Logout","Logout",new { accountSession = account},null)
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

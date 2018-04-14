@@ -1,0 +1,59 @@
+﻿@using ListenAndWrite.Models.DataModel
+@using ListenAndWrite.Models.BusinessModel
+
+@{
+    ViewBag.Title = "Home Page";
+
+    Account account = (Account)(Session["AccountNow"]);
+    string check = ViewBag.check;
+    List<Levels> levels = new ListeningDao().GetAllLevels();
+}
+<head>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" type="text/css" href="~/Content/Style.css" />
+
+</head>
+@using (Html.BeginForm())
+{
+    <div class="listen-write-content">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="List-listen-excrise">
+                    <table>
+                    @foreach(Levels item in levels)
+                    {
+                            
+                            <td>@Html.ActionLink(item.LevelName,"Index","Home",new {LevelID = item.LevelID },null)</td>
+                    }
+                        </table>
+                    <h3>
+                        Improve your listening skills and hear about the news.
+                        Listen-and-write.com is free listening practice.
+                    </h3>
+                    <img src="~/Image/test-your-english.png" alt="test-your-english">
+                    @foreach (Listening item in Model)
+                    {
+                        <li>@Html.ActionLink(item.Tittle, "ChoosingMode", "ChoosingMode", new { ListeningID = item.ListeningID }, null)</li>
+
+
+                        <small>3 days ago</small>
+
+                    }
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="Login-and-Signup">
+                    <div class="jumbotron">
+                        <ul>
+                            <li>@Html.ActionLink("Logout", "Logout", "Logout", new {accountSession = account },null)</li>
+                            <li><a href="">Sign Up</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

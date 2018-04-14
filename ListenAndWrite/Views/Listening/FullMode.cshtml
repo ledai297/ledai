@@ -1,0 +1,57 @@
+﻿
+@using ListenAndWrite.Models.DataModel
+@using ListenAndWrite.Models.BusinessModel
+@{
+    ViewBag.Title = "Listening";
+    var listening = ViewBag.listening as Listening;
+    var accountNow =(Account) Session["AccountNow"];
+}
+
+
+<audio src="~/Audio/@listening.Url" controls></audio>
+<textarea id="text"></textarea>
+
+<div class="result" style="display:none;">
+    <h2 id="h2"></h2>
+    <input type="button" id="listen-again" value="Listen Again"/>
+    @Html.ActionLink("Next Track","FullMode","Listening",new { ListeningID = listening.ListeningID+1},null)
+    <h1 id="score">@accountNow.Birth</h1>
+</div>
+<br />
+<input id="btn-submit" type="submit" value="Submit" />
+
+
+
+
+<script>
+    $(document).ready(function () {
+
+        $("#btn-submit").click(function () {
+            var listeningID = @listening.ListeningID;
+            
+            
+            $.ajax({
+                url: "/Listening/FullMode",
+                data: { ID : listeningID, test: $("#text").val() },
+                type: 'POST',
+                dataType: 'json',
+                success: function (result) {
+                    $("#h2").text(result);
+                    $(".result").fadeIn("slow");
+                    $("#btn-submit").hide();
+                },
+                error: {}
+            });
+        });
+
+
+        $("#listen-again").click(function () {
+            $("audio").get(0).play();
+        });
+
+
+        
+    });
+
+</script>
+
